@@ -1,1 +1,126 @@
+# 🔋 Smart Solar Power Bank with Modular Flashlight
 
+A compact, efficient, and modular power management system designed to harvest solar energy, manage battery charging safely, and provide stable USB output — with an optional detachable flashlight module.
+
+---
+
+## 🚀 Features
+
+* ☀️ **Solar + USB Charging Input**
+* 🔋 **Battery Charging using TP4056**
+* 🛡 **Battery Protection (DW01 + FS8205)**
+* ⚡ **Boost Converter (MT3608) for 5V Output**
+* 🔌 **USB Output for Device Charging**
+* 🔦 **Modular Flashlight (Separate PCB)**
+* 🧪 **Dedicated Test Pads for Debugging**
+* 🧱 **Custom Designed PCB (KiCad)**
+
+---
+
+## 🧠 System Overview
+
+This project integrates multiple subsystems into a single compact PCB:
+
+* **Input Stage:** Solar panel + USB input
+* **Charging Stage:** TP4056 Li-ion charger
+* **Protection Stage:** DW01 + FS8205 for battery safety
+* **Boost Stage:** MT3608 to step up battery voltage to 5V
+* **Output Stage:** USB output for external devices
+* **Lighting Module:** Separate LED PCB powered from battery
+
+---
+
+## 🔌 Hardware Architecture
+
+```
+Solar / USB Input
+        ↓
+    TP4056 Charger
+        ↓
+ Battery + Protection Circuit (DW01 + FS8205)
+        ↓
+    MT3608 Boost Converter
+        ↓
+     USB Output (5V)
+```
+
+Flashlight module is connected separately via a 2-pin output.
+
+---
+
+## 🔦 Flashlight Module
+
+* Separate small PCB
+* 2 × White LEDs (1206)
+* Individual current limiting resistors
+* Powered directly from battery (P+ / P-)
+* Controlled using onboard switch
+
+---
+
+## 🧪 Test & Debug Features
+
+The PCB includes dedicated test pads:
+
+* `TP_BAT` – Battery voltage
+* `TP_5V` – Boost output
+* `TP_GND` – Ground reference
+
+These allow easy debugging and validation.
+
+---
+
+## 🛠 Tools & Software
+
+* **KiCad** – Schematic & PCB Design
+* **Fusion 360** *(planned)* – Enclosure Design
+
+---
+
+## 📦 PCB Details
+
+* 2-layer PCB
+* Ground plane on bottom layer
+* Optimized power routing
+* Standard manufacturing constraints
+* Mounting holes for enclosure integration
+
+---
+
+## ⚡ Key Design Decisions
+
+* Modular flashlight instead of onboard LED for flexibility
+* Separate ground considerations (BAT- vs P-) for protection circuit
+* Efficient power routing for minimal losses
+* SMD test points instead of through-hole for clean layout
+
+---
+
+## 📸 Preview
+
+*(Add PCB renders / 3D views here)*
+
+---
+
+## 🧑‍💻 Author
+
+**Nishanth**
+Electrical Engineering Student
+
+---
+
+## 🔥 Future Improvements
+
+* Higher efficiency boost converter
+* Fast charging support
+* Improved enclosure design
+* Higher brightness LED module
+* IoT monitoring (battery & usage stats)
+
+---
+
+## ⭐ If You Like This Project
+
+Give it a star ⭐ and feel free to fork or build your own version!
+
+---
