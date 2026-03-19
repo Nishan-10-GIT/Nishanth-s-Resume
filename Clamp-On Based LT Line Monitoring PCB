@@ -1,1 +1,121 @@
-Clamp-On Based LT Line Monitoring PCB
+# ⚡ LT Line Health Monitoring & Intelligent Safety System
+
+## 🚧 Overview
+Faults in Low Tension (LT) power distribution lines often go undetected until they cause power outages, safety hazards, or even fatal accidents. Traditional monitoring methods are manual, slow, or too expensive for LT-level deployment.
+
+This project presents a low-cost, decentralized IoT-based system that continuously monitors LT lines and automatically isolates faulty sections to improve safety and reliability.
+
+---
+
+## 🧠 Core Idea
+A network of self-powered, plug-and-play sensor nodes is deployed across the LT line. Each node monitors electrical parameters and communicates wirelessly with a central system.
+
+If a node fails or abnormal conditions are detected, the system automatically disconnects the faulty section using relay control.
+
+---
+
+## ⚡ Key Features
+- Plug-and-play sensor modules for easy deployment  
+- Self-powered using energy harvesting (no external supply)  
+- LoRa-based long-range communication  
+- Automatic fault isolation using relay control  
+- Real-time voltage and current monitoring  
+- Scalable architecture for large distribution networks  
+
+---
+
+## 🧩 System Architecture
+Power Source → Relay → Node 1 → Relay → Node 2 → Load  
+
+Each node consists of:
+- ESP32 (controller)  
+- ACS712 (current sensor)  
+- ZMPT101B (voltage sensor)  
+- LoRa SX1278 module  
+- Relay control interface  
+
+---
+
+## ⚙️ Working Principle
+
+### Normal Operation
+- Sensors continuously measure voltage and current  
+- ESP32 transmits data to the dashboard via LoRa  
+- System status is displayed as healthy  
+
+### Fault Condition
+- If a node stops transmitting or detects abnormal values:  
+  - The system identifies the fault  
+  - A signal is sent to the previous node  
+  - The previous node cuts power using a relay  
+
+### Result
+- Prevents current flow into damaged or inactive lines  
+- Reduces risk of accidents and equipment damage  
+
+---
+
+## 🔋 Energy Harvesting & Plug-and-Play
+Each sensor module:
+- Draws power directly from the LT line  
+- Requires no external power or battery  
+- Can be installed anywhere with minimal setup  
+
+This makes the system cost-effective, easy to deploy, and highly scalable.
+
+---
+
+## 🧪 Prototype Setup
+The system is currently tested using a scaled-down model:
+- 5V SMPS adapter (simulated LT line)  
+- ESP32 with sensors  
+- Relay module  
+- DC motor + LED as load  
+
+Flow:
+5V Supply → Relay → Sensors → ESP32 → Load  
+
+---
+
+## 🛠️ Hardware Components
+- ESP32 Development Board  
+- LoRa SX1278 Module  
+- ACS712 Current Sensor  
+- ZMPT101B Voltage Sensor  
+- Relay Module  
+- Power Supply (SMPS)  
+- Load (Motor + LED)  
+
+---
+
+## 💻 Software Stack
+- Arduino IDE (ESP32 programming)  
+- LoRa communication  
+- Web dashboard (planned)  
+
+---
+
+## 🚀 Future Improvements
+- AI-based fault prediction  
+- Advanced dashboard with analytics  
+- Mobile application integration  
+- Full-scale AC line implementation  
+- Smart load balancing  
+
+---
+
+## 🌍 Impact
+- Improves safety in LT distribution systems  
+- Reduces manual inspection effort  
+- Enables faster fault detection and response  
+- Provides a low-cost alternative to traditional systems  
+
+---
+
+## 👨‍💻 Author
+Nishanth  
+
+---
+
+## 📌 Status
+Prototype in development
