@@ -1,121 +1,355 @@
 # ⚡ LT Line Health Monitoring & Intelligent Safety System
 
-## 🚧 Overview
-Faults in Low Tension (LT) power distribution lines often go undetected until they cause power outages, safety hazards, or even fatal accidents. Traditional monitoring methods are manual, slow, or too expensive for LT-level deployment.
-
-This project presents a low-cost, decentralized IoT-based system that continuously monitors LT lines and automatically isolates faulty sections to improve safety and reliability.
+A low-cost, decentralized monitoring system designed to **continuously monitor Low Tension (LT) distribution lines, detect abnormal conditions, and isolate affected sections** using distributed sensor nodes and long-range wireless communication.
 
 ---
 
-## 🧠 Core Idea
-A network of self-powered, plug-and-play sensor nodes is deployed across the LT line. Each node monitors electrical parameters and communicates wirelessly with a central system.
+## 🚧 Overview
 
-If a node fails or abnormal conditions are detected, the system automatically disconnects the faulty section using relay control.
+Low Tension (LT) distribution lines can develop faults, abnormal loading conditions, or interruptions that may remain undetected until they result in outages, equipment damage, or safety hazards.
+
+This project proposes a **distributed IoT-based monitoring and protection architecture** in which multiple sensor nodes are deployed along an LT distribution line.
+
+Each node continuously monitors electrical parameters and communicates its status wirelessly. When an abnormal condition or node failure is detected, the system can initiate **relay-based isolation of the affected section**.
+
+The design focuses on:
+
+* Low-cost hardware
+* Distributed monitoring
+* Long-range communication
+* Self-powered sensor nodes
+* Automatic fault isolation
+* Scalable deployment
+
+---
+
+## 🧠 Core Concept
+
+The system uses a network of **plug-and-play monitoring nodes** distributed across an LT line.
+
+Each node:
+
+1. Measures electrical parameters.
+2. Processes the measurements using an ESP32.
+3. Transmits its status through LoRa.
+4. Monitors communication and node health.
+5. Controls a relay for section isolation when required.
+
+### High-Level Architecture
+
+```text
+                    LT Distribution Line
+                           │
+                           ▼
+                    ┌─────────────┐
+                    │    Relay    │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │    Node 1   │
+                    │ ESP32       │
+                    │ Voltage     │
+                    │ Current     │
+                    │ LoRa        │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │    Relay    │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │    Node 2   │
+                    │ ESP32       │
+                    │ Voltage     │
+                    │ Current     │
+                    │ LoRa        │
+                    └──────┬──────┘
+                           │
+                           ▼
+                          Load
+```
 
 ---
 
 ## ⚡ Key Features
-- Plug-and-play sensor modules for easy deployment  
-- Self-powered using energy harvesting (no external supply)  
-- LoRa-based long-range communication  
-- Automatic fault isolation using relay control  
-- Real-time voltage and current monitoring  
-- Scalable architecture for large distribution networks  
+
+* 🔌 **Plug-and-play monitoring nodes**
+* 🔋 **Energy-harvesting based node power**
+* 📡 **LoRa-based long-range communication**
+* ⚡ **Real-time voltage and current monitoring**
+* 🛡️ **Automatic relay-based section isolation**
+* 🧩 **Distributed and modular architecture**
+* 📈 **Scalable for multiple LT line sections**
+* 💰 **Low-cost implementation using readily available hardware**
 
 ---
 
-## 🧩 System Architecture
-Power Source → Relay → Node 1 → Relay → Node 2 → Load  
+## 🧩 Monitoring Node
 
-Each node consists of:
-- ESP32 (controller)  
-- ACS712 (current sensor)  
-- ZMPT101B (voltage sensor)  
-- LoRa SX1278 module  
-- Relay control interface  
+Each monitoring node consists of:
+
+| Component                     | Function                                 |
+| ----------------------------- | ---------------------------------------- |
+| **ESP32**                     | Data acquisition, processing and control |
+| **ACS712**                    | Current measurement                      |
+| **ZMPT101B**                  | Voltage measurement                      |
+| **SX1278 LoRa**               | Wireless communication                   |
+| **Relay Module**              | Section isolation                        |
+| **Energy Harvesting Circuit** | Node power generation                    |
+
+The modular architecture allows individual nodes to be deployed at different points along the distribution network.
 
 ---
 
 ## ⚙️ Working Principle
 
-### Normal Operation
-- Sensors continuously measure voltage and current  
-- ESP32 transmits data to the dashboard via LoRa  
-- System status is displayed as healthy  
+### 🟢 Normal Operation
 
-### Fault Condition
-- If a node stops transmitting or detects abnormal values:  
-  - The system identifies the fault  
-  - A signal is sent to the previous node  
-  - The previous node cuts power using a relay  
+During normal operation:
 
-### Result
-- Prevents current flow into damaged or inactive lines  
-- Reduces risk of accidents and equipment damage  
+```text
+LT Line
+   ↓
+Voltage & Current Sensing
+   ↓
+ESP32
+   ↓
+Parameter Processing
+   ↓
+LoRa Communication
+   ↓
+Central Monitoring System
+```
 
----
+The sensor node continuously measures electrical parameters and periodically transmits its status.
 
-## 🔋 Energy Harvesting & Plug-and-Play
-Each sensor module:
-- Draws power directly from the LT line  
-- Requires no external power or battery  
-- Can be installed anywhere with minimal setup  
-
-This makes the system cost-effective, easy to deploy, and highly scalable.
+The system maintains the node as **healthy** as long as the measured parameters and communication status remain within the defined operating conditions.
 
 ---
 
-## 🧪 Prototype Setup
-The system is currently tested using a scaled-down model:
-- 5V SMPS adapter (simulated LT line)  
-- ESP32 with sensors  
-- Relay module  
-- DC motor + LED as load  
+### 🔴 Fault / Abnormal Condition
 
-Flow:
-5V Supply → Relay → Sensors → ESP32 → Load  
+When an abnormal condition is detected:
 
----
+```text
+Abnormal Condition
+        ↓
+Sensor Measurement
+        ↓
+ESP32 Processing
+        ↓
+Fault Identification
+        ↓
+Relay Control
+        ↓
+Affected Section Isolated
+```
 
-## 🛠️ Hardware Components
-- ESP32 Development Board  
-- LoRa SX1278 Module  
-- ACS712 Current Sensor  
-- ZMPT101B Voltage Sensor  
-- Relay Module  
-- Power Supply (SMPS)  
-- Load (Motor + LED)  
+The system can respond to conditions such as:
 
----
+* Abnormal voltage
+* Abnormal current
+* Node communication failure
+* Sensor/node inactivity
+* Other predefined fault conditions
 
-## 💻 Software Stack
-- Arduino IDE (ESP32 programming)  
-- LoRa communication  
-- Web dashboard (planned)  
-
----
-
-## 🚀 Future Improvements
-- AI-based fault prediction  
-- Advanced dashboard with analytics  
-- Mobile application integration  
-- Full-scale AC line implementation  
-- Smart load balancing  
+The isolation mechanism is intended to prevent the affected section from continuing to remain energized.
 
 ---
 
-## 🌍 Impact
-- Improves safety in LT distribution systems  
-- Reduces manual inspection effort  
-- Enables faster fault detection and response  
-- Provides a low-cost alternative to traditional systems  
+## 🔋 Energy Harvesting & Plug-and-Play Architecture
+
+A key objective of the system is to minimize dependence on external power sources.
+
+The monitoring node is designed to obtain its operating power through **energy harvesting from the monitored line**, reducing the need for dedicated batteries or external supplies.
+
+This enables:
+
+* Reduced installation complexity
+* Lower maintenance requirements
+* Easier deployment across multiple locations
+* Modular replacement of sensor nodes
+* Improved scalability
+
+> ⚠️ The prototype currently uses an external low-voltage supply. Energy-harvesting based powering is part of the intended system architecture.
+
+---
+
+## 🧪 Prototype
+
+The initial prototype uses a **scaled-down low-voltage setup** to validate the sensing, control, and communication architecture safely.
+
+### Prototype Configuration
+
+```text
+5V DC Supply
+     │
+     ▼
+   Relay
+     │
+     ▼
+ Voltage / Current Sensors
+     │
+     ▼
+    ESP32
+     │
+     ├──── LoRa Communication
+     │
+     ▼
+   Load
+(Motor + LED)
+```
+
+### Prototype Components
+
+* ESP32 development board
+* ACS712 current sensor
+* ZMPT101B voltage sensor
+* SX1278 LoRa module
+* Relay module
+* 5V SMPS adapter
+* DC motor
+* LED load
+
+The low-voltage prototype allows the monitoring and isolation concept to be developed without directly working on an energized LT distribution line.
+
+---
+
+## 🛠️ Hardware
+
+### Controller
+
+**ESP32**
+
+Used for:
+
+* Sensor data acquisition
+* Signal processing
+* Fault-condition evaluation
+* Relay control
+* LoRa communication
+
+### Sensors
+
+**ACS712**
+
+Used for current measurement.
+
+**ZMPT101B**
+
+Used for isolated AC voltage measurement in applicable prototype configurations.
+
+### Communication
+
+**SX1278 LoRa**
+
+Provides long-range wireless communication between distributed monitoring nodes and the central monitoring system.
+
+### Protection & Control
+
+**Relay Module**
+
+Used to control power flow and isolate a monitored section when the control logic determines that isolation is required.
+
+---
+
+## 💻 Software
+
+### Development
+
+* Arduino IDE
+* Embedded C/C++ for ESP32
+
+### Communication
+
+* LoRa wireless communication
+* Node-to-node status communication
+
+### Monitoring
+
+* Web dashboard *(planned)*
+
+---
+
+## 📊 Planned Monitoring Parameters
+
+The system is designed to monitor:
+
+| Parameter            | Purpose                                    |
+| -------------------- | ------------------------------------------ |
+| Voltage              | Detect abnormal voltage conditions         |
+| Current              | Detect abnormal loading/current conditions |
+| Node Status          | Determine whether a node is operational    |
+| Communication Status | Detect loss of node communication          |
+| Relay Status         | Track section isolation state              |
+
+---
+
+## 🚀 Future Development
+
+### Phase 1 — Prototype
+
+* [x] ESP32-based monitoring
+* [x] Voltage sensing
+* [x] Current sensing
+* [x] Relay control
+* [x] Low-voltage prototype
+* [ ] Complete LoRa node network
+
+### Phase 2 — Monitoring Platform
+
+* [ ] Central monitoring dashboard
+* [ ] Real-time parameter visualization
+* [ ] Fault/event logging
+* [ ] Node health monitoring
+* [ ] Remote status monitoring
+
+### Phase 3 — Intelligent System
+
+* [ ] Historical data analysis
+* [ ] Fault classification
+* [ ] Predictive fault detection
+* [ ] AI-assisted anomaly detection
+* [ ] Advanced network diagnostics
+
+### Phase 4 — Hardware Development
+
+* [ ] Dedicated monitoring PCB
+* [ ] Improved signal conditioning
+* [ ] Integrated energy-harvesting circuit
+* [ ] Outdoor enclosure
+* [ ] Field-oriented prototype
+
+---
+
+## 🌍 Potential Impact
+
+The proposed architecture aims to provide a practical approach for **distributed LT-line monitoring and localized fault isolation**.
+
+Potential benefits include:
+
+* ⚡ Faster detection of abnormal conditions
+* 🛡️ Improved distribution-line safety
+* 🔍 Reduced dependence on manual inspection
+* 📡 Remote monitoring of distributed nodes
+* 🔧 Easier maintenance and modular deployment
+* 💰 Lower-cost monitoring infrastructure
+
+---
+
+## 📌 Project Status
+
+🚧 **Prototype in Development**
+
+Current work focuses on validating the **sensing, ESP32 control, relay isolation, and LoRa communication architecture** using a scaled-down low-voltage prototype.
+
+The system is being developed progressively toward a dedicated, self-powered monitoring node and centralized monitoring platform.
 
 ---
 
 ## 👨‍💻 Author
-Nishanth  
 
----
+**Nishanth**
 
-## 📌 Status
-Prototype in development
+Electrical & Electronics Engineering
+VLSI • Embedded Systems • IoT • Power Systems
